@@ -8,9 +8,31 @@ use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\View\View;
 
 class UserController extends Controller
 {
+   function RegistrationPage():View{
+       return view('pages.auth.registration-page');
+   }
+
+    function LoginPage():View{
+        return view('pages.auth.login-page');
+    }
+    function SendOtpPage():View{
+        return view('pages.auth.send-otp-page');
+    }
+    function VerifyOtpPage():View{
+        return view('pages.auth.verify-otp-page');
+    }
+    function ResetPasswordPage():View{
+        return view('pages.auth.reset-pass-page');
+    }
+
+
+
+
+
     function UserRegistration(Request $request){
         try {
 
@@ -71,7 +93,7 @@ class UserController extends Controller
             ]);
 
         }else{
-            response()->json(
+          return  response()->json(
                 [
                     'status'=>'failed',
                     'message'=>'unauthorized'
@@ -95,10 +117,11 @@ class UserController extends Controller
             $token=JWTToken::CreateTokenForSetPassword($request->input('email'));
             return response()->json([
                 'status'=>'success',
-                'message'=>'otp verification successful'
+                'message'=>'otp verification successful',
+                'token'=>$token
             ]);
         }else{
-            response()->json(
+           return response()->json(
                 [
                     'status'=>'failed',
                     'message'=>'unauthorized'

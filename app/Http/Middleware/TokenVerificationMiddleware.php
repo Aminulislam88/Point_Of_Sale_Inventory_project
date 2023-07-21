@@ -9,16 +9,10 @@ use Symfony\Component\HttpFoundation\Response;
 
 class TokenVerificationMiddleware
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
-     * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
-     */
+
     public function handle(Request $request, Closure $next):Response
     {
-        $token=$request->cookie('token');
+        $token=$request->header('token');
         $result=JWTToken::VerifyToken($token);
         if ($result=="unauthorized"){
             return response()->json([

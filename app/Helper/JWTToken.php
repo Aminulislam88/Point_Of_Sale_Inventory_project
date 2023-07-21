@@ -30,7 +30,7 @@ class JWTToken
     }
 
 
-    public static function VerifyToken($token){
+    public static function VerifyToken($token):string{
        try {
            $key=env('JWT_KEY');
            $decode=JWT::decode($token,new Key($key,'HS256'));
